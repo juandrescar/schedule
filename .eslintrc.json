@@ -1,0 +1,18 @@
+{
+  "extends": ["airbnb-base", "prettier"],
+  "plugins": ["prettier", "jest"],
+  "rules": {
+    "prefer-promise-reject-errors":"off",
+    "prettier/prettier": "off",
+    "no-console":"off",
+    "class-methods-use-this":"off",
+    "no-plusplus":"off",
+    "eqeqeq":"off",
+    "func-names":"off",
+    "no-loop-func":"off",
+    "no-await-in-loop":"off",
+    "no-useless-escape":"off",
+    "no-underscore-dangle":"off",
+    "no-param-reassign":"off"
+  }
+}
