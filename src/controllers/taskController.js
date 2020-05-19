@@ -1,4 +1,5 @@
 const Task = require('../model/task');
+const SlackController = require('../controllers/slackController');
 
 class TaskController {
   async get(res) {
@@ -15,6 +16,11 @@ class TaskController {
       res.status(500).json(this.notification(false, 'Error en el servidor', null, error));
     });
     
+    const messageSlack = await SlackController.sendMessage(task, 'Creado');
+    if(!messageSlack.ok)
+    {
+      res.status(200).json(this.notification(messageSlack.ok, 'Error en el servidor de Slack', task, [{msg: messageSlack.error}]));
+    }
     res.status(200).json(this.notification(true, 'Se ha guardado exitosamente la nueva tarea.', task, null));
   }
 
@@ -38,6 +44,11 @@ class TaskController {
       res.status(500).json(this.notification(false, 'Error en el servidor', null, error));
     });
     if(task){
+      const messageSlack = await SlackController.sendMessage(task, 'Actualizado');
+      if(!messageSlack.ok)
+      {
+        res.status(200).json(this.notification(messageSlack.ok, 'Error en el servidor de Slack', task, [{msg: messageSlack.error}]));
+      }
       res.status(200).json(this.notification(true, 'Se ha actualizado exitosamente la tarea.', task, null));
     } else {
       res.status(404).json(this.notification(false, 'Tarea no encontrada para modificar.', task, null));
@@ -50,6 +61,11 @@ class TaskController {
       res.status(500).json(this.notification(false, 'Error en el servidor', null, error));
     });
     if(task){
+      const messageSlack = await SlackController.sendMessage(task, 'Eliminado');
+      if(!messageSlack.ok)
+      {
+        res.status(200).json(this.notification(messageSlack.ok, 'Error en el servidor de Slack', null, [{msg: messageSlack.error}]));
+      }
       res.status(200).json(this.notification(true, 'Se ha eliminado exitosamente la tarea.', null, null));
     } else {
       res.status(404).json(this.notification(false, 'Tarea no encontrada.', task, null));
@@ -67,9 +83,9 @@ class TaskController {
     return {
       success: ifSuccess,
       message: msg,
+      data: response,
       errors: error,
     };
-    
   }
 }
 

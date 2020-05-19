@@ -1,11 +1,9 @@
 const router = require('express').Router();
 
 const taskRoutes = require('./task')
+const slackRoutes = require('./slack')
 
 router.use('/tasks', taskRoutes)
-
-router.get('/', function (req, res) {
-  res.status(200).json({ message: 'Estás conectado a nuestra API' })
-})
+router.use('/slacks', slackRoutes)
 
 module.exports = router
