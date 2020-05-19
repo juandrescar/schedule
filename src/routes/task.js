@@ -56,6 +56,11 @@ router.put('/:id',[
   TaskController.update(req, res, id);
 });
 
+router.post('/:id/status', async (req, res, next) => {
+  const { id } = req.params;
+  TaskController.toggleTask(req, res, id);
+});
+
 router.delete('/:id', async (req, res, next) => {
   let { id } = req.params;
   TaskController.delete(id, res);

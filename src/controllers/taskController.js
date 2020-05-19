@@ -55,6 +55,30 @@ class TaskController {
     }
   }
 
+  async toggleTask(req, res, id) {
+    const task = await Task.findOneAndUpdate({_id: id}, req.body, {new: true})
+    .catch((error) => {
+      res.status(500).json(this.notification(false, 'Error en el servidor', null, error));
+    });
+    if(task){
+      const action = task.status ? 'Completado' :  'Reabierto'
+      const messageSlack = await SlackController.sendMessage(task, action);
+      if(!messageSlack.ok)
+      {
+        res.status(200).json(this.notification(messageSlack.ok, 'Error en el servidor de Slack', task, [{msg: messageSlack.error}]));
+      }
+      let text;
+      if(task.status) {
+        text = 'Se ha completado exitosamente la tarea.';
+      } else {
+        text = 'Se ha reabierto la tarea.';
+      }
+      res.status(200).json(this.notification(true, text, task, null));
+    } else {
+      res.status(404).json(this.notification(false, 'Tarea no encontrada para modificar.', task, null));
+    }
+  }
+
   async delete(id, res) {
     const task = await Task.findByIdAndRemove(id)
     .catch((error) => {
