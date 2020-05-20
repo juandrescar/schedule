@@ -12,7 +12,7 @@ class SlackController {
     const channels = await web.conversations.list({
       token: slackToken
     }).catch(error => {
-      res.status(500).json(this.notification(false, 'Error en el servidor', null, error));
+      res.status(500).json(this.notification(false, 'Server error', null, null));
     });
 
     const channelsNew = _.map( _.filter(channels.channels, 'is_member'), function (channel){
@@ -24,7 +24,7 @@ class SlackController {
       }
       return false;
     }) 
-    res.status(200).json(this.notification(channels.ok, 'Listado de tareas encontrado', channelsNew, null));
+    res.status(200).json(this.notification(channels.ok, "Slack's Channel list found", channelsNew, null));
   }
 
   notification(ifSuccess, msg, response, error) {
@@ -46,7 +46,7 @@ class SlackController {
     const slackToken = process.env.SLACK_TOKEN;
     const web = new WebClient(slackToken);
 
-    const texto = `Se ha *${action} una Tarea* \n Titulo: ${task.title} \n Fecha: ${task.customDate} \n Descripción: ${task.description}\n`;
+    const texto = `A task has been *${action}* \n Title: ${task.title} \n Date: ${task.customDate} \n Description: ${task.description}\n`;
 
     const response = await web.chat.postMessage({ channel: task.slackChannel.id, text: texto })
     .catch((error) => {

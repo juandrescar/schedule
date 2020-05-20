@@ -1,335 +1,424 @@
 /**
- * @api {get} api/tasks Listado de tareas
+ * @api {get} api/tasks Task list
  * @apiName getTasks
  * @apiGroup Task 
  *
- * @apiSuccess {Boolean} success bandera que indica si la petición fue exitosa (true)
- * @apiSuccess {String} message Mensaje de la petición
- * @apiSuccess {Array} data Listado de tareas almacenados
+ * @apiSuccess {Boolean} success field indicating if the request was successful (true)
+ * @apiSuccess {String} message Request message
+ * @apiSuccess {Array} data List of stored tasks
  
  * @apiSuccessExample {json} Success
  * HTTP/1.1 200 OK
  * {
-      "success": true,
-      "message": "Listado de tareas encontrado",
-      "data": {
-      "success": true,
-      "message": "Listado de tareas encontrado",
-      "data": [
-        {
-          "title": "Trabajo 1",
-          "description": "Descripción de Trabajo 1",
-          "status": true,
-          "date": 2020-05-14T00:00:00.000Z,
-          "finalDate": null,
-          "slackChannel": "#Canal_1",
-          "_id": "5eb9b5f65a3e74057547d887",
-          "__v": 0,
-          "created_at": "2020-05-12T22:01:02.613Z",
-          "updated_at": "2020-05-12T22:01:02.613Z"
+    "success": true,
+    "message": "Tasks list found",
+    "data": [
+      {
+        "title": "work 1",
+        "description": "description work 1",
+        "status": false,
+        "date": "2020-05-20T14:59:22.233Z",
+        "finalDate": null,
+        "_id": "5ec549c6b6b9717608003e70",
+        "slackChannel": {
+          "id": "C013U963MPF",
+          "name": "web-development"
         },
-        {
-          "title": "Trabajo 2",
-          "description": "Descripción de Trabajo 2",
-          "status": true,
-          "date": 2020-05-14T00:00:00.000Z,
-          "finalDate": null,
-          "slackChannel": "#Canal_2",
-          "_id": "5eb9b617055b3c05a787be52",
-          "__v": 0,
-          "created_at": "2020-05-12T22:01:02.613Z",
-          "updated_at": "2020-05-12T22:01:02.613Z"
-        }
-      ]
-    }
- * @apiSuccessExample {JSON} Without records
- * HTTP/1.1 200 Success without advertisings
- * {
-      "success": true,
-      "message": "Listado de tareas encontrado",
-      "data": []
-    }
- * @apiError {String} msg Descripción del error.
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiErrorExample {JSON} Internal Server Error
- * HTTP/1.1 500 Internal Server Error
- * {
-    "success": false,
-    "message": "Error en el servidor",
-  }
- */
-
- /**
- * @api {get} api/tasks/:_id Detalles de una tarea
- * @apiName getTask
- * @apiGroup Task
- *
- * @apiParam {String} _id Identificador de la tarea (GET)
- * 
- * @apiSuccess {Boolean} success bandera que indica si la petición fue exitosa (true)
- * @apiSuccess {String} message Tarea encontrad
- * @apiSuccess {Object} data Objeto de la tarea encontrada
- * 
- *
- * @apiSuccessExample {JSON} Success
- * {
-    "success": true,
-    "message": "Tarea encontrada",
-    "data": {
-      "title": "titulo 1",
-      "description": "descripción de trabajo 1",
-      "status": true,
-      "date": "2020-05-14T00:00:00.000Z",
-      "finalDate": null,
-      "_id": "5ebb230c3658364240ddaf98",
-      "slackChannel": "#Canal 1",
-      "created_at": "2020-05-12T22:28:28.079Z",
-      "updated_at": "2020-05-12T22:28:28.079Z",
-      "__v": 0
-    }
-  }
- * @apiError {String} message Descripcón de la consulta erronea
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiError {Array} errors Array que describe posibles errores, o retorna null
- * @apiErrorExample {JSON} Not found
- * HTTP/1.1 404 Not found
- * {
-    "success": false,
-    "message": "Tarea no encontrada",
-    "errors": null
-  }
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiError {String} message Descripción del error.
- * @apiError {Object} errors describe errores del servidor o retorna null
- * @apiErrorExample {JSON} Internal Server Error
- * HTTP/1.1 500 Internal Server Error
- * {
-    "success": false,
-    "message": "Error en el servidor",
-    "errors": {
-      "message": "Cast to ObjectId failed for value \"5eb99396f0735a6664eaca5\" at path \"_id\" for model \"task\"",
-      "name": "CastError",
-      "stringValue": "\"5eb99396f0735a6664eaca5\"",
-      "value": "5eb99396f0735a6664eaca5",
-      "path": "_id",
-      "reason": {}
-    }
-  }
- */
-
-/**
- * @api {post} api/tasks Guardar nueva tarea
- * @apiName saveTask
- * @apiGroup Task
- *
- * @apiParam {String} title titulo de la tarea
- * @apiParam {String} description descripción de la tarea
- * @apiParam {Boolean} status estado de la publicidad
- * @apiParam {String} slackChannel Canal de Slack asociado a la tarea
- * @apiParam {Date} date Fecha de la tarea
- *
- * @apiExample {JSON} Example JSON Request
- * {
-      "status": true,
-      "title": "titulo 1",
-      "description": "descripción de trabajo 1",
-      "date": "2020-05-14",
-      "slackChannel": "#Canal 1"
-    } 
- *
- * @apiSuccess {Boolean} success bandera que indica si la petición fue exitosa (true)
- * @apiSuccess {String} message Mensaje de la petición
- * @apiSuccess {Object} data Objeto de la tarea encontrada
- * 
- * @apiSuccessExample {json} Success
- * HTTP/1.1 200 OK
- * {
-    "success": true,
-    "message": "Se ha guardado exitosamente la nueva tarea.",
-    "data": {
-      "title": "titulo 1",
-      "description": "descripción de trabajo 1",
-      "status": true,
-      "date": "2020-05-14T00:00:00.000Z",
-      "finalDate": null,
-      "_id": "5ebb230c3658364240ddaf98",
-      "slackChannel": "#Canal 1",
-      "created_at": "2020-05-12T22:28:28.079Z",
-      "updated_at": "2020-05-12T22:28:28.079Z",
-      "__v": 0
-    }
-  }
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiError {String} message Descripción del error.
- * @apiError {Array} errors Array de los errores.
- * @apiErrorExample {JSON} Unprocessable Entity
- * HTTP/1.1 422 Unprocessable Entity
- * {
-    "success": false,
-    "message": "Error en parámetros",
-    "errors": [
-      {
-        "field": "title",
-        "msg": "Debe agregar un titulo"
+        "created_at": "2020-05-20T15:16:22.919Z",
+        "updated_at": "2020-05-20T15:16:22.919Z",
+        "__v": 0,
+        "customDate": "2020/05/20",
+        "id": "5ec549c6b6b9717608003e70"
       },
       {
-        "field": "date",
-        "msg": "Debe agregar una fecha"
-      },
-      {
-        "field": "date",
-        "msg": "El Formato de la fecha debe ser YYYY-MM-DD"
-      },
-      {
-        "field": "slackChannel",
-        "msg": "Debe agregar un canal de slack"
+        "title": "work 2",
+        "description": "description work 2",
+        "status": false,
+        "date": "2020-05-20T14:59:22.233Z",
+        "finalDate": null,
+        "_id": "5ec549d0b6b9717608003e71",
+        "slackChannel": {
+          "id": "C013U963MPF",
+          "name": "web-development"
+        },
+        "created_at": "2020-05-20T15:16:32.963Z",
+        "updated_at": "2020-05-20T15:16:32.963Z",
+        "__v": 0,
+        "customDate": "2020/05/20",
+        "id": "5ec549d0b6b9717608003e71"
       }
     ]
   }
- *
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiError {String} message Descripción del error.
- * @apiError {Object} errors describe errores del servidor o retorna null
+ * @apiSuccessExample {JSON} Without records
+ * HTTP/1.1 200 Success without tasks
+ * {
+      "success": true,
+      "message": "Tasks list found",
+      "data": []
+    }
+ * @apiError {String} msg Error description.
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
  * @apiErrorExample {JSON} Internal Server Error
  * HTTP/1.1 500 Internal Server Error
  * {
     "success": false,
     "message": "Error en el servidor",
-    "errors": {
-      "message": "Cast to ObjectId failed for value \"5eb99396f0735a6664eaca5\" at path \"_id\" for model \"task\"",
-      "name": "CastError",
-      "stringValue": "\"5eb99396f0735a6664eaca5\"",
-      "value": "5eb99396f0735a6664eaca5",
-      "path": "_id",
-      "reason": {}
-    }
   }
  */
 
  /**
- * @api {put} api/tasks/:_id Actualizar tarea
- * @apiName updateTask
+ * @api {get} api/tasks/:_id Show Details of a task
+ * @apiName getTask
  * @apiGroup Task
  *
- * @apiParam {String} title titulo de la tarea
- * @apiParam {String} description descripción de la tarea
- * @apiParam {Boolean} status estado de la publicidad
- * @apiParam {String} slackChannel Canal de Slack asociado a la tarea
- * @apiParam {Date} date Fecha de la tarea
+ * @apiParam {String} _id Task identifier (GET)
+ * 
+ * @apiSuccess {Boolean} success field indicating if the request was successful (true)
+ * @apiSuccess {String} message Task found
+ * @apiSuccess {Object} data Object of found task
+ * 
+ *
+ * @apiSuccessExample {JSON} Success
+ * {
+      "success": true,
+      "message": "Task found",
+      "data": {
+        "title": "work 1",
+        "description": "description work 1",
+        "status": false,
+        "date": "2020-05-20T14:59:22.233Z",
+        "finalDate": null,
+        "_id": "5ec549c6b6b9717608003e70",
+        "slackChannel": {
+          "id": "C013U963MPF",
+          "name": "web-development"
+        },
+        "created_at": "2020-05-20T15:16:22.919Z",
+        "updated_at": "2020-05-20T15:16:22.919Z",
+        "__v": 0,
+        "customDate": "2020/05/20",
+        "id": "5ec549c6b6b9717608003e70"
+      }
+    }
+ * @apiError {String} message Description of the wrong query
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {Array} errors Array that describes possible errors, or returns null
+ * @apiErrorExample {JSON} Not found
+ * HTTP/1.1 404 Not found
+ * {
+      "success": false,
+      "message": "Task not found",
+      "data": null,
+      "errors": null
+    }
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Array} errors Array that describes possible errors, or returns null
+ * @apiErrorExample {JSON} Internal Server Error
+ * HTTP/1.1 500 Internal Server Error
+ * {
+      "success": false,
+      "message": "Server error",
+      "data": null,
+      "errors": null
+    }
+ */
+
+/**
+ * @api {post} api/tasks Save new task
+ * @apiName saveTask
+ * @apiGroup Task
+ *
+ * @apiParam {String} title Task title
+ * @apiParam {String} description Task description
+ * @apiParam {Boolean} status Task status
+ * @apiParam {Object} slackChannel Slack channel associated with the task
+ * @apiParam {Date} date Task date
  *
  * @apiExample {JSON} Example JSON Request
  * {
-      "title": "titulo 1",
-      "description": "descripción de trabajo 1",
-      "status": true,
-      "date": "2020-05-14",
-      "slackChannel": "#Canal 1"
+      "title": "Task title",
+      "slackChannel": {"id": "C013U963MPF", "name": "web-development"},
+      "date": "2020-05-20T15:16:34.467Z",
+      "description": "description Task"
+    } 
+ *
+ * @apiSuccess {Boolean} success field indicating if the request was successful (true)
+ * @apiSuccess {String} message Request message
+ * @apiSuccess {Object} data Object of found task
+ * 
+ * @apiSuccessExample {json} Success
+ * HTTP/1.1 200 OK
+ * {
+      "success": true,
+      "message": "The new task has been successfully saved",
+      "data": {
+        "title": "Task title",
+        "description": "description Task",
+        "status": false,
+        "date": "2020-05-20T15:16:34.467Z",
+        "finalDate": null,
+        "_id": "5ec54f058476987984b70ff5",
+        "slackChannel": {
+          "id": "C013U963MPF",
+          "name": "web-development"
+        },
+        "created_at": "2020-05-20T15:38:45.581Z",
+        "updated_at": "2020-05-20T15:38:45.581Z",
+        "__v": 0,
+        "customDate": "2020/05/20",
+        "id": "5ec54f058476987984b70ff5"
+      }
+    }
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Array} errors Array that describes possible errors, or returns null.
+ * @apiErrorExample {JSON} Unprocessable Entity
+ * HTTP/1.1 422 Unprocessable Entity
+ * {
+      "success": false,
+      "message": "Parameter error",
+      "errors": [
+        {
+          "field": "title",
+          "msg": "Title is required"
+        },
+        {
+          "field": "date",
+          "msg": "Date is required"
+        },
+        {
+          "field": "date",
+          "msg": "The date format must be YYYY-MM-DD"
+        },
+        {
+          "field": "slackChannel",
+          "msg": "Slack's channel  is required"
+        }
+      ]
     }
  *
- * @apiSuccess {Boolean} success bandera que indica si la petición fue exitosa (true)
- * @apiSuccess {String} message Mensaje de la petición
- * @apiSuccess {Object} data Objeto de la tarea encontrada
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Object} errors Array that describes possible errors, or returns null.
+ * @apiErrorExample {JSON} Internal Server Error
+ * HTTP/1.1 500 Internal Server Error
+ * {
+      "success": false,
+      "message": "Server error",
+      "data": null,
+      "errors": null
+    }
+ */
+
+ /**
+ * @api {put} api/tasks/:_id Update task
+ * @apiName updateTask
+ * @apiGroup Task
+ *
+ * @apiParam {String} _id Task identifier (GET)
+ * @apiParam {String} title Task title
+ * @apiParam {String} description Task description
+ * @apiParam {Boolean} status Task status
+ * @apiParam {Object} slackChannel Slack channel associated with the task
+ * @apiParam {Date} date Task date
+ *
+ * @apiExample {JSON} Example JSON Request
+ * {
+      "title": "Task title modify",
+      "slackChannel": {"id": "C013U963MPF", "name": "web-development"},
+      "date": "2020-05-20T15:16:34.467Z",
+      "description": "description Task modify"
+    }
+ *
+ * @apiSuccess {Boolean} success field indicating if the request was successful (true)
+ * @apiSuccess {String} message Request message
+ * @apiSuccess {Object} data Object of found task
  *
  * @apiSuccessExample {json} Success
  * HTTP/1.1 200 OK
  * {
       "success": true,
-      "message": "Tarea encontrada",
+      "message": "The task has been successfully updated",
       "data": {
-        "title": "titulo 1",
-        "description": "descripción de trabajo 1",
-        "status": true,
-        "date": "2020-05-14T00:00:00.000Z",
+        "title": "Task title modify",
+        "description": "description Task modify",
+        "status": false,
+        "date": "2020-05-20T15:16:34.467Z",
         "finalDate": null,
-        "_id": "5ebb230c3658364240ddaf98",
-        "slackChannel": "#Canal 1",
-        "created_at": "2020-05-12T22:28:28.079Z",
-        "updated_at": "2020-05-12T22:28:28.079Z",
-        "__v": 0
+        "_id": "5ec549c6b6b9717608003e70",
+        "slackChannel": {
+          "id": "C013U963MPF",
+          "name": "web-development"
+        },
+        "created_at": "2020-05-20T15:16:22.919Z",
+        "updated_at": "2020-05-20T15:51:36.567Z",
+        "__v": 0,
+        "customDate": "2020/05/20",
+        "id": "5ec549c6b6b9717608003e70"
       }
     }
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiError {String} message Descripcón de la consulta erronea
- * @apiError {Array} errors Array que describe posibles errores, o retorna null
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Array} errors Array that describes possible errors, or returns null.
  * @apiErrorExample {JSON} Not found
  * HTTP/1.1 404 Not found
  * {
-    "success": false,
-    "message": "Tarea no encontrada",
-    "errors": null
-  }
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiError {String} message Descripcón de la consulta erronea
- * @apiError {Array} errors Array que describe posibles errores, o retorna null
+      "success": false,
+      "message": "Task not found to modify",
+      "data": null,
+      "errors": null
+    }
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Array} errors Array that describes possible errors, or returns null.
  * @apiErrorExample {JSON} Unprocessable Entity
  * HTTP/1.1 422 Unprocessable Entity
  * {
       "success": false,
-      "message": "Error en parámetros",
+      "message": "Parameter error",
       "errors": [
         {
           "field": "title",
-          "msg": "Debe agregar un titulo"
+          "msg": "Title is required"
         },
         {
           "field": "date",
-          "msg": "Debe agregar una fecha"
+          "msg": "Date is required"
         },
         {
           "field": "date",
-          "msg": "El Formato de la fecha debe ser YYYY-MM-DD"
+          "msg": "The date format must be YYYY-MM-DD"
         },
         {
           "field": "slackChannel",
-          "msg": "Debe agregar un canal de slack"
+          "msg": "Slack's channel  is required"
         }
       ]
+    }
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Object} errors Array that describes possible errors, or returns null.
+ * @apiErrorExample {JSON} Internal Server Error
+ * HTTP/1.1 500 Internal Server Error
+ * {
+      "success": false,
+      "message": "Server error",
+      "data": null,
+      "errors": null
     }
  */
 
  /**
- * @api {delete} api/tasks/_id Eliminar una tarea
+ * @api {delete} api/tasks/_id Delete task
  * @apiName deleteTask
  * @apiGroup Task
  *
- * @apiParam {String} _id Identificador de la tarea (URL)
+ * @apiParam {String} _id Task identifier (GET)
  *
- * @apiSuccess {Boolean} success bandera que indica si la petición fue exitosa (true)
- * @apiSuccess {String} message Mensaje de la petición
- * @apiSuccess {Object} data retorna en null
+ * @apiSuccess {Boolean} success field indicating if the request was successful (true)
+ * @apiSuccess {String} message Request message
+ * @apiSuccess {Object} data returns null
  * @apiSuccessExample {JSON} Success
  * HTTP/1.1 200 OK
  * {
       "success": true,
-      "message": "Se ha eliminado exitosamente la tarea.",
+      "message": "The task has been successfully removed",
       "data": null
-  }
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiError {String} message Descripcón de la consulta erronea
- * @apiError {Array} errors Array que describe posibles errores, o retorna null
+    }
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Array} errors Array that describes possible errors, or returns null.
  * @apiErrorExample {JSON} Not found
  * HTTP/1.1 404 Not found
  * {
       "success": false,
-      "message": "Tarea no encontrada.",
+      "message": "Task not found",
+      "data": null,
       "errors": null
     }
  *
- * @apiError {Boolean} success bandera que indica que hubo un fallo en la petición (false)
- * @apiError {String} message Descripción del error.
- * @apiError {Object} errors describe errores del servidor o retorna null
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Object} errors Array that describes possible errors, or returns null.
  * @apiErrorExample {JSON} Internal Server Error
  * HTTP/1.1 500 Internal Server Error
  * {
-    "success": false,
-    "message": "Error en el servidor",
-    "errors": {
-      "message": "Cast to ObjectId failed for value \"5eb99396f0735a6664eaca5\" at path \"_id\" for model \"task\"",
-      "name": "CastError",
-      "stringValue": "\"5eb99396f0735a6664eaca5\"",
-      "value": "5eb99396f0735a6664eaca5",
-      "path": "_id",
-      "reason": {}
+      "success": false,
+      "message": "Server error",
+      "data": null,
+      "errors": null
     }
-  }
+ */
+
+ /**
+ * @api {post} api/tasks/:_id/status Toggle a task completed
+ * @apiName toggleTask
+ * @apiGroup Task
+ *
+ * @apiParam {String} _id Task identifier (GET)
+ * @apiParam {String} title Task title
+ * @apiParam {String} description Task description
+ * @apiParam {Boolean} status Task status (true) completed, (false) reopened
+ * @apiParam {Object} slackChannel Slack channel associated with the task
+ * @apiParam {Date} date Task date
+ *
+ * @apiExample {JSON} Example JSON Request
+ * {
+      "title": "Task title modify",
+      "slackChannel": {"id": "C013U963MPF", "name": "web-development"},
+      "date": "2020-05-20T15:16:34.467Z",
+      "description": "description Task modify"
+      "status": true
+    }
+ *
+ * @apiSuccess {Boolean} success field indicating if the request was successful (true)
+ * @apiSuccess {String} message Request message
+ * @apiSuccess {Object} data Object of found updated
+ *
+ * @apiSuccessExample {json} Success
+ * HTTP/1.1 200 OK
+ * {
+      "success": true,
+      "message": "The task has been successfully completed",
+      "data": {
+        "title": "Task title modify",
+        "description": "description Task modify",
+        "status": true,
+        "date": "2020-05-20T15:16:34.467Z",
+        "finalDate": null,
+        "_id": "5ec549d0b6b9717608003e71",
+        "slackChannel": {
+          "id": "C013U963MPF",
+          "name": "web-development"
+        },
+        "created_at": "2020-05-20T15:16:32.963Z",
+        "updated_at": "2020-05-20T16:08:47.050Z",
+        "__v": 0,
+        "customDate": "2020/05/20",
+        "id": "5ec549d0b6b9717608003e71"
+      }
+    }
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Array} errors Array that describes possible errors, or returns null.
+ * @apiErrorExample {JSON} Not found
+ * HTTP/1.1 404 Not found
+ * {
+      "success": false,
+      "message": "Task not found to modify",
+      "data": null,
+      "errors": null
+    }
+ * @apiError {Boolean} success field indicating that there was a failure in the request (false)
+ * @apiError {String} message Error description.
+ * @apiError {Object} errors Array that describes possible errors, or returns null.
+ * @apiErrorExample {JSON} Internal Server Error
+ * HTTP/1.1 500 Internal Server Error
+ * {
+      "success": false,
+      "message": "Server error",
+      "data": null,
+      "errors": null
+    }
  */

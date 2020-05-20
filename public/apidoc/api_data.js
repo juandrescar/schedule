@@ -1,202 +1,10 @@
 define({ "api": [
   {
-    "type": "delete",
-    "url": "api/tasks/_id",
-    "title": "Eliminar una tarea",
-    "name": "deleteTask",
-    "group": "Task",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "_id",
-            "description": "<p>Identificador de la tarea (URL)</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "success",
-            "description": "<p>bandera que indica si la petición fue exitosa (true)</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Mensaje de la petición</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "data",
-            "description": "<p>retorna en null</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success",
-          "content": "HTTP/1.1 200 OK\n{\n      \"success\": true,\n      \"message\": \"Se ha eliminado exitosamente la tarea.\",\n      \"data\": null\n    }",
-          "type": "JSON"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "type": "Boolean",
-            "optional": false,
-            "field": "success",
-            "description": "<p>bandera que indica que hubo un fallo en la petición (false)</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Descripcón de la consulta erronea</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "type": "Array",
-            "optional": false,
-            "field": "errors",
-            "description": "<p>Array que describe posibles errores, o retorna null</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Not found element",
-          "content": "HTTP/1.1 404 Not found\n{\n      \"success\": false,\n      \"message\": \"Tarea no encontrada.\",\n      \"errors\": null\n    }",
-          "type": "JSON"
-        },
-        {
-          "title": "Internal Server Error",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"success\": false,\n    \"message\": \"Error en el servidor\",\n    \"errors\": {\n      \"message\": \"Cast to ObjectId failed for value \\\"5eb99396f0735a6664eaca5\\\" at path \\\"_id\\\" for model \\\"task\\\"\",\n      \"name\": \"CastError\",\n      \"stringValue\": \"\\\"5eb99396f0735a6664eaca5\\\"\",\n      \"value\": \"5eb99396f0735a6664eaca5\",\n      \"path\": \"_id\",\n      \"reason\": {}\n    }\n  }",
-          "type": "JSON"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "src/docs/task.js",
-    "groupTitle": "Task"
-  },
-  {
     "type": "get",
-    "url": "api/tasks/:_id",
-    "title": "Detalles de una tarea",
-    "name": "getTask",
-    "group": "Task",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "_id",
-            "description": "<p>Identificador de la tarea (GET)</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "success",
-            "description": "<p>bandera que indica si la petición fue exitosa (true)</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Tarea encontrad</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "data",
-            "description": "<p>Objeto de la tarea encontrada</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success",
-          "content": "{\n    \"success\": true,\n    \"message\": \"Tarea encontrada\",\n    \"data\": {\n      \"title\": \"titulo 1\",\n      \"description\": \"descripción de trabajo 1\",\n      \"status\": true,\n      \"date\": \"2020-05-14T00:00:00.000Z\",\n      \"finalDate\": null,\n      \"_id\": \"5ebb230c3658364240ddaf98\",\n      \"slackChannel\": \"#Canal 1\",\n      \"created_at\": \"2020-05-12T22:28:28.079Z\",\n      \"updated_at\": \"2020-05-12T22:28:28.079Z\",\n      \"__v\": 0\n    }\n  }",
-          "type": "JSON"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Descripcón de la consulta erronea</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "type": "Boolean",
-            "optional": false,
-            "field": "success",
-            "description": "<p>bandera que indica que hubo un fallo en la petición (false)</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "type": "Array",
-            "optional": false,
-            "field": "errors",
-            "description": "<p>Array que describe posibles errores, o retorna null</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Without records",
-          "content": "HTTP/1.1 404 Not found\n{\n    \"success\": false,\n    \"message\": \"Tarea no encontrada\",\n    \"errors\": null\n  }",
-          "type": "JSON"
-        },
-        {
-          "title": "Internal Server Error",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"success\": false,\n    \"message\": \"Error en el servidor\",\n    \"errors\": {\n      \"message\": \"Cast to ObjectId failed for value \\\"5eb99396f0735a6664eaca5\\\" at path \\\"_id\\\" for model \\\"task\\\"\",\n      \"name\": \"CastError\",\n      \"stringValue\": \"\\\"5eb99396f0735a6664eaca5\\\"\",\n      \"value\": \"5eb99396f0735a6664eaca5\",\n      \"path\": \"_id\",\n      \"reason\": {}\n    }\n  }",
-          "type": "JSON"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "src/docs/task.js",
-    "groupTitle": "Task"
-  },
-  {
-    "type": "get",
-    "url": "api/tasks",
-    "title": "Listado de tareas",
+    "url": "api/slacks",
+    "title": "Slack's channel list",
     "name": "getTasks",
-    "group": "Task",
+    "group": "Slack",
     "success": {
       "fields": {
         "Success 200": [
@@ -205,33 +13,33 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "success",
-            "description": "<p>bandera que indica si la petición fue exitosa (true)</p>"
+            "description": "<p>field indicating if the request was successful (true)</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Mensaje de la petición</p>"
+            "description": "<p>Request message</p>"
           },
           {
             "group": "Success 200",
             "type": "Array",
             "optional": false,
             "field": "data",
-            "description": "<p>Listado de tareas almacenados</p>"
+            "description": "<p>List of stored tasks</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success",
-          "content": "HTTP/1.1 200 OK\n{\n      \"success\": true,\n      \"message\": \"Listado de tareas encontrado\",\n      \"data\": {\n      \"success\": true,\n      \"message\": \"Listado de tareas encontrado\",\n      \"data\": [\n        {\n          \"title\": \"Trabajo 1\",\n          \"description\": \"Descripción de Trabajo 1\",\n          \"status\": true,\n          \"date\": 2020-05-14T00:00:00.000Z,\n          \"finalDate\": null,\n          \"slackChannel\": \"#Canal_1\",\n          \"_id\": \"5eb9b5f65a3e74057547d887\",\n          \"__v\": 0,\n          \"created_at\": \"2020-05-12T22:01:02.613Z\",\n          \"updated_at\": \"2020-05-12T22:01:02.613Z\"\n        },\n        {\n          \"title\": \"Trabajo 2\",\n          \"description\": \"Descripción de Trabajo 2\",\n          \"status\": true,\n          \"date\": 2020-05-14T00:00:00.000Z,\n          \"finalDate\": null,\n          \"slackChannel\": \"#Canal_2\",\n          \"_id\": \"5eb9b617055b3c05a787be52\",\n          \"__v\": 0,\n          \"created_at\": \"2020-05-12T22:01:02.613Z\",\n          \"updated_at\": \"2020-05-12T22:01:02.613Z\"\n        }\n      ]\n    }",
+          "content": "HTTP/1.1 200 OK\n{\n    \"success\": true,\n    \"message\": \"Slack's Channel list found\",\n    \"data\": [\n      {\n        \"id\": \"C013U963MPF\",\n        \"name\": \"web-development\"\n      }\n    ]\n  }",
           "type": "json"
         },
         {
           "title": "Without records",
-          "content": "HTTP/1.1 200 Success without advertisings\n{\n      \"success\": true,\n      \"message\": \"Listado de tareas encontrado\",\n      \"data\": []\n    }",
+          "content": "HTTP/1.1 200 Success without tasks\n{\n      \"success\": true,\n      \"message\": \"Slack's Channel list found\",\n      \"data\": []\n    }",
           "type": "JSON"
         }
       ]
@@ -244,20 +52,288 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "msg",
-            "description": "<p>Descripción del error.</p>"
+            "description": "<p>Error description.</p>"
           },
           {
             "group": "Error 4xx",
             "type": "Boolean",
             "optional": false,
             "field": "success",
-            "description": "<p>bandera que indica que hubo un fallo en la petición (false)</p>"
+            "description": "<p>field indicating that there was a failure in the request (false)</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Not found element",
+          "title": "Internal Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"success\": false,\n    \"message\": \"Error en el servidor\",\n  }",
+          "type": "JSON"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/docs/salck.js",
+    "groupTitle": "Slack"
+  },
+  {
+    "type": "delete",
+    "url": "api/tasks/_id",
+    "title": "Delete task",
+    "name": "deleteTask",
+    "group": "Task",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Task identifier (GET)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>field indicating if the request was successful (true)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Request message</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>returns null</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n      \"success\": true,\n      \"message\": \"The task has been successfully removed\",\n      \"data\": null\n    }",
+          "type": "JSON"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>field indicating that there was a failure in the request (false)</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Error description.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "Array",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>Array that describes possible errors, or returns null.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Not found",
+          "content": "HTTP/1.1 404 Not found\n{\n      \"success\": false,\n      \"message\": \"Task not found\",\n      \"data\": null,\n      \"errors\": null\n    }",
+          "type": "JSON"
+        },
+        {
+          "title": "Internal Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n      \"success\": false,\n      \"message\": \"Server error\",\n      \"data\": null,\n      \"errors\": null\n    }",
+          "type": "JSON"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/docs/task.js",
+    "groupTitle": "Task"
+  },
+  {
+    "type": "get",
+    "url": "api/tasks/:_id",
+    "title": "Show Details of a task",
+    "name": "getTask",
+    "group": "Task",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Task identifier (GET)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>field indicating if the request was successful (true)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Task found</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Object of found task</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "{\n      \"success\": true,\n      \"message\": \"Task found\",\n      \"data\": {\n        \"title\": \"work 1\",\n        \"description\": \"description work 1\",\n        \"status\": false,\n        \"date\": \"2020-05-20T14:59:22.233Z\",\n        \"finalDate\": null,\n        \"_id\": \"5ec549c6b6b9717608003e70\",\n        \"slackChannel\": {\n          \"id\": \"C013U963MPF\",\n          \"name\": \"web-development\"\n        },\n        \"created_at\": \"2020-05-20T15:16:22.919Z\",\n        \"updated_at\": \"2020-05-20T15:16:22.919Z\",\n        \"__v\": 0,\n        \"customDate\": \"2020/05/20\",\n        \"id\": \"5ec549c6b6b9717608003e70\"\n      }\n    }",
+          "type": "JSON"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Description of the wrong query</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>field indicating that there was a failure in the request (false)</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "Array",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>Array that describes possible errors, or returns null</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Not found",
+          "content": "HTTP/1.1 404 Not found\n{\n      \"success\": false,\n      \"message\": \"Task not found\",\n      \"data\": null,\n      \"errors\": null\n    }",
+          "type": "JSON"
+        },
+        {
+          "title": "Internal Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n      \"success\": false,\n      \"message\": \"Server error\",\n      \"data\": null,\n      \"errors\": null\n    }",
+          "type": "JSON"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/docs/task.js",
+    "groupTitle": "Task"
+  },
+  {
+    "type": "get",
+    "url": "api/tasks",
+    "title": "Task list",
+    "name": "getTasks",
+    "group": "Task",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>field indicating if the request was successful (true)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Request message</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "data",
+            "description": "<p>List of stored tasks</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n    \"success\": true,\n    \"message\": \"Tasks list found\",\n    \"data\": [\n      {\n        \"title\": \"work 1\",\n        \"description\": \"description work 1\",\n        \"status\": false,\n        \"date\": \"2020-05-20T14:59:22.233Z\",\n        \"finalDate\": null,\n        \"_id\": \"5ec549c6b6b9717608003e70\",\n        \"slackChannel\": {\n          \"id\": \"C013U963MPF\",\n          \"name\": \"web-development\"\n        },\n        \"created_at\": \"2020-05-20T15:16:22.919Z\",\n        \"updated_at\": \"2020-05-20T15:16:22.919Z\",\n        \"__v\": 0,\n        \"customDate\": \"2020/05/20\",\n        \"id\": \"5ec549c6b6b9717608003e70\"\n      },\n      {\n        \"title\": \"work 2\",\n        \"description\": \"description work 2\",\n        \"status\": false,\n        \"date\": \"2020-05-20T14:59:22.233Z\",\n        \"finalDate\": null,\n        \"_id\": \"5ec549d0b6b9717608003e71\",\n        \"slackChannel\": {\n          \"id\": \"C013U963MPF\",\n          \"name\": \"web-development\"\n        },\n        \"created_at\": \"2020-05-20T15:16:32.963Z\",\n        \"updated_at\": \"2020-05-20T15:16:32.963Z\",\n        \"__v\": 0,\n        \"customDate\": \"2020/05/20\",\n        \"id\": \"5ec549d0b6b9717608003e71\"\n      }\n    ]\n  }",
+          "type": "json"
+        },
+        {
+          "title": "Without records",
+          "content": "HTTP/1.1 200 Success without tasks\n{\n      \"success\": true,\n      \"message\": \"Tasks list found\",\n      \"data\": []\n    }",
+          "type": "JSON"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>Error description.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>field indicating that there was a failure in the request (false)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Internal Server Error",
           "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"success\": false,\n    \"message\": \"Error en el servidor\",\n  }",
           "type": "JSON"
         }
@@ -270,7 +346,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "api/tasks",
-    "title": "Guardar nueva tarea",
+    "title": "Save new task",
     "name": "saveTask",
     "group": "Task",
     "parameter": {
@@ -281,35 +357,35 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "title",
-            "description": "<p>titulo de la tarea</p>"
+            "description": "<p>Task title</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "description",
-            "description": "<p>descripción de la tarea</p>"
+            "description": "<p>Task description</p>"
           },
           {
             "group": "Parameter",
             "type": "Boolean",
             "optional": false,
             "field": "status",
-            "description": "<p>estado de la publicidad</p>"
+            "description": "<p>Task status</p>"
           },
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Object",
             "optional": false,
             "field": "slackChannel",
-            "description": "<p>Canal de Slack asociado a la tarea</p>"
+            "description": "<p>Slack channel associated with the task</p>"
           },
           {
             "group": "Parameter",
             "type": "Date",
             "optional": false,
             "field": "date",
-            "description": "<p>Fecha de la tarea</p>"
+            "description": "<p>Task date</p>"
           }
         ]
       }
@@ -317,7 +393,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Example JSON Request",
-        "content": "{\n      \"status\": true,\n      \"title\": \"titulo 1\",\n      \"description\": \"descripción de trabajo 1\",\n      \"date\": \"2020-05-14\",\n      \"slackChannel\": \"#Canal 1\"\n    }",
+        "content": "{\n      \"title\": \"Task title\",\n      \"slackChannel\": {\"id\": \"C013U963MPF\", \"name\": \"web-development\"},\n      \"date\": \"2020-05-20T15:16:34.467Z\",\n      \"description\": \"description Task\"\n    }",
         "type": "JSON"
       }
     ],
@@ -329,28 +405,28 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "success",
-            "description": "<p>bandera que indica si la petición fue exitosa (true)</p>"
+            "description": "<p>field indicating if the request was successful (true)</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Mensaje de la petición</p>"
+            "description": "<p>Request message</p>"
           },
           {
             "group": "Success 200",
             "type": "Object",
             "optional": false,
             "field": "data",
-            "description": "<p>Objeto de la tarea encontrada</p>"
+            "description": "<p>Object of found task</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success",
-          "content": "HTTP/1.1 200 OK\n{\n    \"success\": true,\n    \"message\": \"Se ha guardado exitosamente la nueva tarea.\",\n    \"data\": {\n      \"title\": \"titulo 1\",\n      \"description\": \"descripción de trabajo 1\",\n      \"status\": true,\n      \"date\": \"2020-05-14T00:00:00.000Z\",\n      \"finalDate\": null,\n      \"_id\": \"5ebb230c3658364240ddaf98\",\n      \"slackChannel\": \"#Canal 1\",\n      \"created_at\": \"2020-05-12T22:28:28.079Z\",\n      \"updated_at\": \"2020-05-12T22:28:28.079Z\",\n      \"__v\": 0\n    }\n  }",
+          "content": "HTTP/1.1 200 OK\n{\n      \"success\": true,\n      \"message\": \"The new task has been successfully saved\",\n      \"data\": {\n        \"title\": \"Task title\",\n        \"description\": \"description Task\",\n        \"status\": false,\n        \"date\": \"2020-05-20T15:16:34.467Z\",\n        \"finalDate\": null,\n        \"_id\": \"5ec54f058476987984b70ff5\",\n        \"slackChannel\": {\n          \"id\": \"C013U963MPF\",\n          \"name\": \"web-development\"\n        },\n        \"created_at\": \"2020-05-20T15:38:45.581Z\",\n        \"updated_at\": \"2020-05-20T15:38:45.581Z\",\n        \"__v\": 0,\n        \"customDate\": \"2020/05/20\",\n        \"id\": \"5ec54f058476987984b70ff5\"\n      }\n    }",
           "type": "json"
         }
       ]
@@ -363,33 +439,171 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "success",
-            "description": "<p>bandera que indica que hubo un fallo en la petición (false)</p>"
+            "description": "<p>field indicating that there was a failure in the request (false)</p>"
           },
           {
             "group": "Error 4xx",
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Descripción del error.</p>"
+            "description": "<p>Error description.</p>"
           },
           {
             "group": "Error 4xx",
-            "type": "Object",
+            "type": "Array",
             "optional": false,
             "field": "errors",
-            "description": "<p>Array de los errores.</p>"
+            "description": "<p>Array that describes possible errors, or returns null.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Error en los parametros",
-          "content": "HTTP/1.1 422 Unprocessable Entity\n{\n    \"success\": false,\n    \"message\": \"Error en parámetros\",\n    \"errors\": [\n      \"Debe agregar un titulo\",\n      \"Debe agregar un canal de slack\"\n    ]\n  }",
+          "title": "Unprocessable Entity",
+          "content": "HTTP/1.1 422 Unprocessable Entity\n{\n      \"success\": false,\n      \"message\": \"Parameter error\",\n      \"errors\": [\n        {\n          \"field\": \"title\",\n          \"msg\": \"Title is required\"\n        },\n        {\n          \"field\": \"date\",\n          \"msg\": \"Date is required\"\n        },\n        {\n          \"field\": \"date\",\n          \"msg\": \"The date format must be YYYY-MM-DD\"\n        },\n        {\n          \"field\": \"slackChannel\",\n          \"msg\": \"Slack's channel  is required\"\n        }\n      ]\n    }",
           "type": "JSON"
         },
         {
           "title": "Internal Server Error",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"success\": false,\n    \"message\": \"Error en el servidor\",\n    \"errors\": {\n      \"message\": \"Cast to ObjectId failed for value \\\"5eb99396f0735a6664eaca5\\\" at path \\\"_id\\\" for model \\\"task\\\"\",\n      \"name\": \"CastError\",\n      \"stringValue\": \"\\\"5eb99396f0735a6664eaca5\\\"\",\n      \"value\": \"5eb99396f0735a6664eaca5\",\n      \"path\": \"_id\",\n      \"reason\": {}\n    }\n  }",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n      \"success\": false,\n      \"message\": \"Server error\",\n      \"data\": null,\n      \"errors\": null\n    }",
+          "type": "JSON"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/docs/task.js",
+    "groupTitle": "Task"
+  },
+  {
+    "type": "post",
+    "url": "api/tasks/:_id/status",
+    "title": "Toggle a task completed",
+    "name": "toggleTask",
+    "group": "Task",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Task identifier (GET)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Task title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>Task description</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Task status (true) completed, (false) reopened</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "slackChannel",
+            "description": "<p>Slack channel associated with the task</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Task date</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Example JSON Request",
+        "content": "{\n      \"title\": \"Task title modify\",\n      \"slackChannel\": {\"id\": \"C013U963MPF\", \"name\": \"web-development\"},\n      \"date\": \"2020-05-20T15:16:34.467Z\",\n      \"description\": \"description Task modify\"\n      \"status\": true\n    }",
+        "type": "JSON"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>field indicating if the request was successful (true)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Request message</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Object of found updated</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n      \"success\": true,\n      \"message\": \"The task has been successfully completed\",\n      \"data\": {\n        \"title\": \"Task title modify\",\n        \"description\": \"description Task modify\",\n        \"status\": true,\n        \"date\": \"2020-05-20T15:16:34.467Z\",\n        \"finalDate\": null,\n        \"_id\": \"5ec549d0b6b9717608003e71\",\n        \"slackChannel\": {\n          \"id\": \"C013U963MPF\",\n          \"name\": \"web-development\"\n        },\n        \"created_at\": \"2020-05-20T15:16:32.963Z\",\n        \"updated_at\": \"2020-05-20T16:08:47.050Z\",\n        \"__v\": 0,\n        \"customDate\": \"2020/05/20\",\n        \"id\": \"5ec549d0b6b9717608003e71\"\n      }\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>field indicating that there was a failure in the request (false)</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Error description.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "Array",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>Array that describes possible errors, or returns null.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Not found",
+          "content": "HTTP/1.1 404 Not found\n{\n      \"success\": false,\n      \"message\": \"Task not found to modify\",\n      \"data\": null,\n      \"errors\": null\n    }",
+          "type": "JSON"
+        },
+        {
+          "title": "Internal Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n      \"success\": false,\n      \"message\": \"Server error\",\n      \"data\": null,\n      \"errors\": null\n    }",
           "type": "JSON"
         }
       ]
@@ -401,7 +615,7 @@ define({ "api": [
   {
     "type": "put",
     "url": "api/tasks/:_id",
-    "title": "Actualizar tarea",
+    "title": "Update task",
     "name": "updateTask",
     "group": "Task",
     "parameter": {
@@ -411,36 +625,43 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "_id",
+            "description": "<p>Task identifier (GET)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "title",
-            "description": "<p>titulo de la tarea</p>"
+            "description": "<p>Task title</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "description",
-            "description": "<p>descripción de la tarea</p>"
+            "description": "<p>Task description</p>"
           },
           {
             "group": "Parameter",
             "type": "Boolean",
             "optional": false,
             "field": "status",
-            "description": "<p>estado de la publicidad</p>"
+            "description": "<p>Task status</p>"
           },
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Object",
             "optional": false,
             "field": "slackChannel",
-            "description": "<p>Canal de Slack asociado a la tarea</p>"
+            "description": "<p>Slack channel associated with the task</p>"
           },
           {
             "group": "Parameter",
             "type": "Date",
             "optional": false,
             "field": "date",
-            "description": "<p>Fecha de la tarea</p>"
+            "description": "<p>Task date</p>"
           }
         ]
       }
@@ -448,7 +669,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Example JSON Request",
-        "content": "{\n      \"title\": \"titulo 1\",\n      \"description\": \"descripción de trabajo 1\",\n      \"status\": true,\n      \"date\": \"2020-05-14\",\n      \"slackChannel\": \"#Canal 1\"\n    }",
+        "content": "{\n      \"title\": \"Task title modify\",\n      \"slackChannel\": {\"id\": \"C013U963MPF\", \"name\": \"web-development\"},\n      \"date\": \"2020-05-20T15:16:34.467Z\",\n      \"description\": \"description Task modify\"\n    }",
         "type": "JSON"
       }
     ],
@@ -460,28 +681,28 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "success",
-            "description": "<p>bandera que indica si la petición fue exitosa (true)</p>"
+            "description": "<p>field indicating if the request was successful (true)</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Mensaje de la petición</p>"
+            "description": "<p>Request message</p>"
           },
           {
             "group": "Success 200",
             "type": "Object",
             "optional": false,
             "field": "data",
-            "description": "<p>Objeto de la tarea encontrada</p>"
+            "description": "<p>Object of found task</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Success with set price",
-          "content": "HTTP/1.1 200 OK\n{\n      \"success\": true,\n      \"message\": \"Tarea encontrada\",\n      \"data\": {\n        \"title\": \"titulo 1\",\n        \"description\": \"descripción de trabajo 1\",\n        \"status\": true,\n        \"date\": \"2020-05-14T00:00:00.000Z\",\n        \"finalDate\": null,\n        \"_id\": \"5ebb230c3658364240ddaf98\",\n        \"slackChannel\": \"#Canal 1\",\n        \"created_at\": \"2020-05-12T22:28:28.079Z\",\n        \"updated_at\": \"2020-05-12T22:28:28.079Z\",\n        \"__v\": 0\n      }\n    }",
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n      \"success\": true,\n      \"message\": \"The task has been successfully updated\",\n      \"data\": {\n        \"title\": \"Task title modify\",\n        \"description\": \"description Task modify\",\n        \"status\": false,\n        \"date\": \"2020-05-20T15:16:34.467Z\",\n        \"finalDate\": null,\n        \"_id\": \"5ec549c6b6b9717608003e70\",\n        \"slackChannel\": {\n          \"id\": \"C013U963MPF\",\n          \"name\": \"web-development\"\n        },\n        \"created_at\": \"2020-05-20T15:16:22.919Z\",\n        \"updated_at\": \"2020-05-20T15:51:36.567Z\",\n        \"__v\": 0,\n        \"customDate\": \"2020/05/20\",\n        \"id\": \"5ec549c6b6b9717608003e70\"\n      }\n    }",
           "type": "json"
         }
       ]
@@ -494,33 +715,38 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "success",
-            "description": "<p>bandera que indica que hubo un fallo en la petición (false)</p>"
+            "description": "<p>field indicating that there was a failure in the request (false)</p>"
           },
           {
             "group": "Error 4xx",
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Descripcón de la consulta erronea</p>"
+            "description": "<p>Error description.</p>"
           },
           {
             "group": "Error 4xx",
             "type": "Array",
             "optional": false,
             "field": "errors",
-            "description": "<p>Array que describe posibles errores, o retorna null</p>"
+            "description": "<p>Array that describes possible errors, or returns null.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Not found element",
-          "content": "HTTP/1.1 404 Not found\n{\n    \"success\": false,\n    \"message\": \"Tarea no encontrada\",\n    \"errors\": null\n  }",
+          "title": "Not found",
+          "content": "HTTP/1.1 404 Not found\n{\n      \"success\": false,\n      \"message\": \"Task not found to modify\",\n      \"data\": null,\n      \"errors\": null\n    }",
           "type": "JSON"
         },
         {
-          "title": "Error principal params",
-          "content": "HTTP/1.1 422 Unprocessable Entity\n{\n      \"success\": false,\n      \"message\": \"Error en parámetros\",\n      \"errors\": [\n        \"Debe agregar una fecha\",\n        \"El Formato de la fecha debe ser YYYY-MM-DD\",\n        \"Debe agregar un canal de slack\"\n      ]\n    }",
+          "title": "Unprocessable Entity",
+          "content": "HTTP/1.1 422 Unprocessable Entity\n{\n      \"success\": false,\n      \"message\": \"Parameter error\",\n      \"errors\": [\n        {\n          \"field\": \"title\",\n          \"msg\": \"Title is required\"\n        },\n        {\n          \"field\": \"date\",\n          \"msg\": \"Date is required\"\n        },\n        {\n          \"field\": \"date\",\n          \"msg\": \"The date format must be YYYY-MM-DD\"\n        },\n        {\n          \"field\": \"slackChannel\",\n          \"msg\": \"Slack's channel  is required\"\n        }\n      ]\n    }",
+          "type": "JSON"
+        },
+        {
+          "title": "Internal Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n      \"success\": false,\n      \"message\": \"Server error\",\n      \"data\": null,\n      \"errors\": null\n    }",
           "type": "JSON"
         }
       ]

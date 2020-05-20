@@ -8,9 +8,9 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', [
-  check('title').exists().withMessage('Debe agregar un titulo'),
-  check('date').exists().withMessage('Debe agregar una fecha').isISO8601().toDate().withMessage('El Formato de la fecha debe ser YYYY-MM-DD'),
-  check('slackChannel').exists().withMessage('Debe agregar un canal de slack'),
+  check('title').exists().withMessage('Title is required'),
+  check('date').exists().withMessage('Date is required').isISO8601().toDate().withMessage('The date format must be YYYY-MM-DD'),
+  check('slackChannel').exists().withMessage("Slack's channel  is required"),
 ],async (req, res, next) => {
 
   const errors = validationResult(req)
@@ -18,7 +18,7 @@ router.post('/', [
   if (!errors.isEmpty()) {
     return res.status(422).json({ 
       success: false,
-      message: "Error en parámetros",
+      message: "Parameter error",
       errors: _.map(errors.array(), function (msg){
         return {
           field: msg.param,
@@ -37,10 +37,10 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.put('/:id',[
-  check('title').exists().withMessage('Debe agregar un titulo'),
-  check('date').exists().withMessage('Debe agregar una fecha').isISO8601().toDate().withMessage('El Formato de la fecha debe ser YYYY-MM-DD'),
-  check('slackChannel').exists().withMessage('Debe agregar un canal de slack'),
-  ], async (req, res, next) => {
+  check('title').exists().withMessage('Title is required'),
+  check('date').exists().withMessage('Date is required').isISO8601().toDate().withMessage('The date format must be YYYY-MM-DD'),
+  check('slackChannel').exists().withMessage("Slack's channel  is required"),
+], async (req, res, next) => {
   const { id } = req.params;
 
   const errors = validationResult(req)
@@ -48,8 +48,13 @@ router.put('/:id',[
   if (!errors.isEmpty()) {
     return res.status(422).json({ 
       success: false,
-      message: "Error en parámetros",
-      errors: _.map(errors.array(), 'msg') 
+      message: "Parameter error",
+      errors: _.map(errors.array(), function (msg){
+        return {
+          field: msg.param,
+          msg: msg.msg
+        };
+      })
     });
   }
   
