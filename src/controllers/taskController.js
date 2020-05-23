@@ -4,7 +4,7 @@ const SlackController = require('../controllers/slackController');
 class TaskController {
   async get(res) {
     const tasks = await Task.find().catch(error => {
-      res.status(500).json(this.notification(false, 'Server error', null, null));
+      res.status(500).json(this.notification(false, 'Server error', null, []));
     });
 
     res.status(200).json(this.notification(true, 'Tasks list found', tasks, null));

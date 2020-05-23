@@ -12,19 +12,25 @@ class SlackController {
     const channels = await web.conversations.list({
       token: slackToken
     }).catch(error => {
-      res.status(500).json(this.notification(false, 'Server error', null, null));
+      let message_error = 'Error with slack API: ' + error.data.error;
+      res.status(500).json(this.notification(false, message_error, null, [{
+        "field": "slackChannel",
+        "msg": error.data.error
+      }]));
     });
 
-    const channelsNew = _.map( _.filter(channels.channels, 'is_member'), function (channel){
-      if(channel.is_member){
-        return {
-          id: channel.id,
-          name: channel.name
-        };
-      }
-      return false;
-    }) 
-    res.status(200).json(this.notification(channels.ok, "Slack's Channel list found", channelsNew, null));
+    if(channels) {
+      const channelsNew = _.map( _.filter(channels.channels, 'is_member'), function (channel){
+        if(channel.is_member){
+          return {
+            id: channel.id,
+            name: channel.name
+          };
+        }
+        return false;
+      }) 
+      res.status(200).json(this.notification(channels.ok, "Slack's Channel list found", channelsNew, null));
+    }
   }
 
   notification(ifSuccess, msg, response, error) {
