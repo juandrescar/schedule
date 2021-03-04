@@ -1,4 +1,4 @@
-# PlayNTrade
+# Schedules
 
 ## Install
 
